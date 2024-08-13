@@ -8,19 +8,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ebcb02f-b2fc-4641-8a6d-66409e5800f6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/OnlineRestaurantReservation.sln" beforeDir="false" afterPath="$PROJECT_DIR$/OnlineRestaurantReservation.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OnlineResterauntReservation_Tests/OnlineResterauntReservation_Tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/OnlineRestaurantReservation_Tests/OnlineRestaurantReservation_Tests.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OnlineResterauntReservation_Tests/ReservationsTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OnlineRestaurantReservation_Tests/ReservationsTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OnlineRestaurantReservation/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OnlineRestaurantReservation/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OnlineRestaurantReservation.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/OnlineRestaurantReservation.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OnlineRestaurantReservation/Models/Reservation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OnlineRestaurantReservation/Models/Reservation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OnlineRestaurantReservation/ReservationsHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OnlineRestaurantReservation/ReservationsHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OnlineRestaurantReservation_Tests/ReservationsTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OnlineRestaurantReservation_Tests/ReservationsTest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DpaMonitoringSettings">
+    <option name="autoShow" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3f1f4402a25a494bb02dd8beeca5cb8fd82000/74/291810a5/Queue`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/14b9d2bde2a6cefa0ec25f42db922e4f4cb948a1c72d8f98a1a6ff919be7db4/Assert.AreEqual.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/OnlineRestaurantReservation_Tests/ReservationsTest.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -37,6 +43,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    ".NET Project.OnlineRestaurantReservation.executor": "Run",
+    "7cdfded3-8d49-4193-bd2d-ee6efcbdd9a6.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
@@ -83,7 +91,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1723579618554</updated>
-      <workItem from="1723579619569" duration="3697000" />
+      <workItem from="1723579619569" duration="9016000" />
     </task>
     <servers />
   </component>
@@ -93,6 +101,25 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/OnlineRestaurantReservation_Tests/ReservationsTest.cs</url>
+          <line>58</line>
+          <properties documentPath="$PROJECT_DIR$/OnlineRestaurantReservation_Tests/ReservationsTest.cs" containingFunctionPresentation="Method 'MakeReservation_ExisitingReservation_CheckTablesCanAcceptCandidate'">
+            <startOffsets>
+              <option value="2282" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2320" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

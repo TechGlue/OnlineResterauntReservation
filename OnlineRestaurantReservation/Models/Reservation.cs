@@ -8,7 +8,7 @@ public class Reservation
 
     public Reservation(DateTime reservationDate, int quantatity)
     {
-        if (quantatity <= 0)
+        if (quantatity <= 0 )
         {
             throw new Exception("Can't have less than 1 member in a a reservation");
         }
