@@ -5,7 +5,6 @@ namespace OnlineRestaurantReservation;
 public class ReservationsHandler
 {
         // We know that reservations are going to be in a first come first served bases so we have to use a queue to pop and add 
-
         private Queue<Reservation> reservationsQueue;
         
         public ReservationsHandler()
