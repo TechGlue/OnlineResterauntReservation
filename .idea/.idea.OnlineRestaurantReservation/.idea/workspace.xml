@@ -8,10 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ebcb02f-b2fc-4641-8a6d-66409e5800f6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OnlineRestaurantReservation.sln" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OnlineRestaurantReservation/OnlineRestaurantReservation.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OnlineRestaurantReservation/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OnlineRestaurantReservation.sln" beforeDir="false" afterPath="$PROJECT_DIR$/OnlineRestaurantReservation.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OnlineResterauntReservation_Tests/OnlineResterauntReservation_Tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/OnlineRestaurantReservation_Tests/OnlineRestaurantReservation_Tests.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OnlineResterauntReservation_Tests/ReservationsTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OnlineRestaurantReservation_Tests/ReservationsTest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +22,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/14b9d2bde2a6cefa0ec25f42db922e4f4cb948a1c72d8f98a1a6ff919be7db4/Assert.AreEqual.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OnlineRestaurantReservation_Tests/ReservationsTest.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 1
@@ -83,7 +83,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1723579618554</updated>
-      <workItem from="1723579619569" duration="3349000" />
+      <workItem from="1723579619569" duration="3697000" />
     </task>
     <servers />
   </component>

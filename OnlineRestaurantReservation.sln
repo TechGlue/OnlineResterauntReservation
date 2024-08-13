@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineRestaurantReservation", "OnlineRestaurantReservation\OnlineRestaurantReservation.csproj", "{5E18CF29-2D60-4C44-A719-7E923F9B8F56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineResterauntReservation_Tests", "OnlineResterauntReservation_Tests\OnlineResterauntReservation_Tests.csproj", "{8AE7E046-6E9F-4C3F-915D-CCEFF1F66AF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineRestaurantReservation_Tests", "OnlineRestaurantReservation_Tests\OnlineRestaurantReservation_Tests.csproj", "{8AE7E046-6E9F-4C3F-915D-CCEFF1F66AF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
