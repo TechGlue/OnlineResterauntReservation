@@ -29,10 +29,10 @@ public class ReservationsTest
     public void MakeReservation_NoReservations_CheckTables()
     {
         //Arrange
-        ReservationsHandler myRestaurant = new ReservationsHandler(new List<Table>(){new Table(12)});
-        ReservationsHandler myRestaurant13 = new ReservationsHandler(new List<Table>(){new Table(12)});
-        ReservationsHandler myRestaurant12 = new ReservationsHandler(new List<Table>(){new Table(12)});
-        
+        ReservationsHandler myRestaurant = new ReservationsHandler(new List<Table>() { new Table(12) });
+        ReservationsHandler myRestaurant13 = new ReservationsHandler(new List<Table>() { new Table(12) });
+        ReservationsHandler myRestaurant12 = new ReservationsHandler(new List<Table>() { new Table(12) });
+
         Reservation res1 = new Reservation(DateTime.Now, 1);
         Reservation res13 = new Reservation(DateTime.Now, 13);
         Reservation res12 = new Reservation(DateTime.Now, 12);
@@ -192,19 +192,19 @@ public class ReservationsTest
         _ = reservationsHandler.AddReservation(existingRes1);
         _ = reservationsHandler.AddReservation(existingRes2);
         _ = reservationsHandler.AddReservation(existingRes3);
-        
+
         string candidateResStatus = reservationsHandler.AddReservation(candidateRes);
 
         //Assert
         Assert.AreEqual("Rejected", candidateResStatus);
     }
-    
+
     [TestMethod]
     [ExpectedException(typeof(Exception))]
     public void MakeReservation_ExisitingReservations_TwoTableExceptionForInvalidMemebers()
     {
         //Arrange
-        List<Table> tables = new List<Table>() { new Table(10), new Table(2)};
+        List<Table> tables = new List<Table>() { new Table(10), new Table(2) };
 
         ReservationsHandler myRestaurant = new ReservationsHandler(tables);
 
@@ -218,5 +218,28 @@ public class ReservationsTest
 
         //Assert
         Assert.AreEqual("Accepted", candidateResStatus);
+    }
+
+
+    [TestMethod]
+    [ExpectedException(typeof(Exception))]
+    public void MakeReservation_NoReservations_PrioritizeSmallerMembersToSmallerTables()
+    {
+        //Arrange
+        List<Table> tables = new List<Table>() { new Table(10), new Table(2) };
+        ReservationsHandler myRestaurant = new ReservationsHandler(tables);
+        Reservation res = new Reservation(DateTime.Parse("2023-09-14"), 1);
+
+        //Act
+        string candidateResStatus = myRestaurant.AddReservation(res);
+        Table? smallestTableOccupied = tables.Find(x => x.TableSize == 2);
+
+        //Assert
+        Assert.AreEqual("Accepted", candidateResStatus);
+
+        if (smallestTableOccupied != null)
+            Assert.AreEqual(1, smallestTableOccupied.FetchCurrentlyOccupied());
+        else
+            Assert.Fail();
     }
 }

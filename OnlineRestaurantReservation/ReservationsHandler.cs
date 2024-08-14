@@ -38,6 +38,7 @@ public class ReservationsHandler
         }
         
         // iterate through the tables given a reservation 
+        // Todo: scan through all the tables first to find an index size that has the smallest amount of seats for the person 
         foreach (Table table in _tables)
         {
             //first check if the table has already been reserved, if not continue 
