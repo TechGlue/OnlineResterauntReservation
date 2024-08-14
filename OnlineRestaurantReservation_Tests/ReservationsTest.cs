@@ -157,48 +157,6 @@ public class ReservationsTest
         Assert.AreEqual("Accepted", candidateResStatus);
     }
 
-
-    [TestMethod]
-    public void MakeReservation_MultipleTablesAndReservations_CheckTablesRejected()
-    {
-        //Arrange
-        List<Table> tables = new List<Table>() { new Table(2), new Table(2), new Table(4) };
-        ReservationsHandler reservationsHandler = new ReservationsHandler(tables);
-        Reservation existingRes = new Reservation(DateTime.Parse("2024-06-07"), 3);
-        Reservation newRes = new Reservation(DateTime.Parse("2024-06-07"), 4);
-
-        //Act
-        string existingResStatus = reservationsHandler.AddReservation(existingRes);
-        string candidateResStatus = reservationsHandler.AddReservation(newRes);
-
-        //Assert
-        Assert.AreEqual("Accepted", existingResStatus);
-        Assert.AreEqual("Rejected", candidateResStatus);
-    }
-
-    [TestMethod]
-    public void MakeReservation_MultipleTablesAndReservationsFullHouse_CheckTablesRejected()
-    {
-        //Arrange
-        List<Table> tables = new List<Table>() { new Table(2), new Table(2), new Table(4) };
-        ReservationsHandler reservationsHandler = new ReservationsHandler(tables);
-        Reservation existingRes1 = new Reservation(DateTime.Parse("2024-06-07"), 3);
-        Reservation existingRes2 = new Reservation(DateTime.Parse("2024-06-07"), 2);
-        Reservation existingRes3 = new Reservation(DateTime.Parse("2024-06-07"), 2);
-
-        Reservation candidateRes = new Reservation(DateTime.Parse("2024-06-07"), 1);
-
-        //Act
-        _ = reservationsHandler.AddReservation(existingRes1);
-        _ = reservationsHandler.AddReservation(existingRes2);
-        _ = reservationsHandler.AddReservation(existingRes3);
-
-        string candidateResStatus = reservationsHandler.AddReservation(candidateRes);
-
-        //Assert
-        Assert.AreEqual("Rejected", candidateResStatus);
-    }
-
     [TestMethod]
     [ExpectedException(typeof(Exception))]
     public void MakeReservation_ExisitingReservations_TwoTableExceptionForInvalidMemebers()
@@ -278,5 +236,85 @@ public class ReservationsTest
             Assert.AreEqual(1, smallestTableOccupied.FetchCurrentlyOccupied());
         else
             Assert.Fail();
+    }
+    
+    [TestMethod]
+    public void MakeReservation_TwoReservations_Accepted()
+    {
+        //Arrange
+        List<Table> tables = new List<Table> {new Table(2), new Table(2), new Table(4)};
+        ReservationsHandler myRestaurant = new ReservationsHandler(tables, 2);
+        Reservation res1 = new Reservation(DateTime.Parse("2023-09-14 18:00:00"), 4);
+        Reservation res2 = new Reservation(DateTime.Parse("2023-09-14 20:00:00"), 3);
+
+        //Act
+        _ = myRestaurant.AddReservation(res1);
+        string candidateResStatus= myRestaurant.AddReservation(res2);
+        //Assert
+        Assert.AreEqual("Accepted", candidateResStatus);
+    }
+    
+    [TestMethod]
+    public void MakeReservation_PrioritizeExisitingTablesAndTimes_Rejected()
+    {
+        //Arrange
+        List<Table> tables = new List<Table> {new Table(2), new Table(4), new Table(4)};
+        ReservationsHandler myRestaurant = new ReservationsHandler(tables, 2.5);
+        Reservation res1 = new Reservation(DateTime.Parse("2023-10-22 18:00:00"), 2);
+        Reservation res2 = new Reservation(DateTime.Parse("2023-10-22 18:15:00"), 1);
+        Reservation res3 = new Reservation(DateTime.Parse("2023-10-22 17:45:00"), 2);
+        Reservation candidateReservation = new Reservation(DateTime.Parse("2023-10-22 20:00:00"), 3);
+
+        //Act
+        _ = myRestaurant.AddReservation(res1);
+        _ = myRestaurant.AddReservation(res2);
+        _ = myRestaurant.AddReservation(res3);
+        string candidateResStatus= myRestaurant.AddReservation(candidateReservation);
+        
+        //Assert
+        Assert.AreEqual("Rejected", candidateResStatus);
+        Assert.AreEqual(3, myRestaurant.GetReservationSize());
+    }
+    
+    [TestMethod]
+    public void MakeReservation_PrioritizeExisitingTablesAndTimes_Accepted()
+    {
+        //Arrange
+        List<Table> tables = new List<Table> {new Table(2), new Table(4), new Table(4)};
+        ReservationsHandler myRestaurant = new ReservationsHandler(tables, 2.5);
+        Reservation res1 = new Reservation(DateTime.Parse("2023-10-22 18:00:00"), 2);
+        Reservation res2 = new Reservation(DateTime.Parse("2023-10-22 17:45:00"), 2);
+        Reservation candidateReservation  = new Reservation(DateTime.Parse("2023-10-22 20:45:00"), 3);
+
+        //Act
+        _ = myRestaurant.AddReservation(res1);
+        _ = myRestaurant.AddReservation(res2);
+        string candidateResStatus= myRestaurant.AddReservation(candidateReservation);
+        
+        //Assert
+        Assert.AreEqual("Accepted", candidateResStatus);
+        Assert.AreEqual(3, myRestaurant.GetReservationSize());
+    }
+    
+    [TestMethod]
+    public void MakeReservation_PrioritizeExisitingTablesAndTimes_Rejected2()
+    {
+        //Arrange
+        List<Table> tables = new List<Table> {new Table(2), new Table(4), new Table(4)};
+        ReservationsHandler myRestaurant = new ReservationsHandler(tables, 2.5);
+        Reservation res1 = new Reservation(DateTime.Parse("2023-10-22 18:00:00"), 2);
+        Reservation res2 = new Reservation(DateTime.Parse("2023-10-22 18:15:00"), 1);
+        Reservation res3 = new Reservation(DateTime.Parse("2023-10-22 17:45:00"), 2);
+        Reservation candidateReservation  = new Reservation(DateTime.Parse("2023-10-22 20:45:00"), 3);
+
+        //Act
+        _ = myRestaurant.AddReservation(res1);
+        _ = myRestaurant.AddReservation(res2);
+        _ = myRestaurant.AddReservation(res3);
+        string candidateResStatus = myRestaurant.AddReservation(candidateReservation);
+        
+        //Assert
+        Assert.AreEqual("Accepted", candidateResStatus);
+        Assert.AreEqual(4, myRestaurant.GetReservationSize());
     }
 }

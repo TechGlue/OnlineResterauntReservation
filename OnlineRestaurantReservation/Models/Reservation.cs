@@ -2,20 +2,20 @@ namespace OnlineRestaurantReservation.Models;
 
 public class Reservation
 {
-    public Guid id;
     public DateTime ReservationDate { get; }
-    //Quantatiy cannot be negative
-    public int Quantatity { get; }
+    public int Quantity { get; }
+    
+    public Table? ReservedTable { get; set; }
 
-    public Reservation(DateTime reservationDate, int quantatity)
+    public Reservation(DateTime reservationDate, int quantity)
     {
-        if (quantatity <= 0 )
+        if (quantity <= 0 )
         {
             throw new Exception("Can't have less than 1 member in a a reservation");
         }
 
-        id = new Guid();
         ReservationDate = reservationDate;
-        Quantatity = quantatity;
+        Quantity = quantity;
+        ReservedTable = null;
     }
 }

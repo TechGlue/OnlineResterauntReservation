@@ -3,21 +3,21 @@ namespace OnlineRestaurantReservation.Models;
 public class Table
 {
     public int TableSize { get; }
-    private int CurrentlyOccupied; 
+    private int _currentlyOccupied; 
 
     public Table(int tableSize)
     {
         TableSize = tableSize;
-        CurrentlyOccupied = 0;
+        _currentlyOccupied = 0;
     }
 
     public void UpdateCurrentlyOccupied(int updatedCurrentlyOccupied)
     {
-        CurrentlyOccupied = updatedCurrentlyOccupied;
+        _currentlyOccupied = updatedCurrentlyOccupied;
     }
 
     public int FetchCurrentlyOccupied()
     {
-        return CurrentlyOccupied;
+        return _currentlyOccupied;
     }
 }
