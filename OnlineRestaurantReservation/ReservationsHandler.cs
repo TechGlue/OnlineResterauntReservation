@@ -1,21 +1,16 @@
 using OnlineRestaurantReservation.Models;
-
 namespace OnlineRestaurantReservation;
 
 // Class is going to be the instance of our reservation system 
 public class ReservationsHandler
 {
-    // We know that reservations are going to be in a first come first served bases so we have to use a queue to pop and add 
-    public int TableSize { get; }
-    private int SeatsOccupied { get; set; }
+    private List<Table> _tables;
     private Queue<Reservation> _reservationsQueue;
-    //Later add a private date field for what day the reservation handler is for... 
 
-    public ReservationsHandler(int tableSize)
+    public ReservationsHandler(List<Table> restaurantTables)
     {
         // Load our restaurants Queue
-        TableSize = tableSize;
-        SeatsOccupied = 0;
+        _tables = restaurantTables;
         _reservationsQueue = new Queue<Reservation>();
     }
 
@@ -23,23 +18,44 @@ public class ReservationsHandler
     // This will represent our accepted or rejected
     public string AddReservation(Reservation reservation)
     {
-        int expectedSeatsOccupied = reservation.Quantatity + SeatsOccupied;
-
-        if (TableSize < reservation.Quantatity || expectedSeatsOccupied > TableSize)
+        // This is a boutique restaurant if we only have one table add
+        if (_tables.Count == 1)
         {
-            return ReservationStatus(false);
+            foreach (Table table in _tables)
+            {
+                int expectedSeatsOccupied = reservation.Quantatity + table.FetchCurrentlyOccupied();
+                
+                if (table.TableSize < reservation.Quantatity || expectedSeatsOccupied > table.TableSize)
+                {
+                    return ReservationStatus(false);
+                }
+                
+                _reservationsQueue.Enqueue(reservation);
+                table.UpdateCurrentlyOccupied(expectedSeatsOccupied);
+            }
+            
+            return ReservationStatus(true);
         }
-
-        _reservationsQueue.Enqueue(reservation);
-        SeatsOccupied += reservation.Quantatity;
-
-        return ReservationStatus(true);
-    }
-
-    public string UpdateReservation(Reservation reservation)
-    {
-        // If no existing table size 
-        return ReservationStatus(true);
+        
+        // iterate through the tables given a reservation 
+        foreach (Table table in _tables)
+        {
+            //first check if the table has already been reserved, if not continue 
+            // Todo: ensure we aren't over booking
+            if (!(table.FetchCurrentlyOccupied() > 0))
+            { 
+                // Check if we can fit the party into this table
+                if (table.TableSize / reservation.Quantatity >= 1)
+                {
+                    _reservationsQueue.Enqueue(reservation);
+                    table.UpdateCurrentlyOccupied(reservation.Quantatity);
+                    return ReservationStatus(true);
+                }
+                // If not table fits party size loop out and return rejected status
+            }
+        }
+        
+        return ReservationStatus(false);
     }
 
     public int CurrentReservationCount()
