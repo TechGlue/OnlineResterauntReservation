@@ -222,7 +222,6 @@ public class ReservationsTest
 
 
     [TestMethod]
-    [ExpectedException(typeof(Exception))]
     public void MakeReservation_NoReservations_PrioritizeSmallerMembersToSmallerTables()
     {
         //Arrange
@@ -237,6 +236,44 @@ public class ReservationsTest
         //Assert
         Assert.AreEqual("Accepted", candidateResStatus);
 
+        if (smallestTableOccupied != null)
+            Assert.AreEqual(1, smallestTableOccupied.FetchCurrentlyOccupied());
+        else
+            Assert.Fail();
+    }
+    
+    [TestMethod]
+    public void MakeReservation_NoReservations_PrioritizeLargeMemberSizesToLargeTablesAccepted()
+    {
+        //Arrange
+        List<Table> tables = new List<Table> { new Table(2), new Table(2), new Table(4), new Table(1), new Table(10)};
+        ReservationsHandler myRestaurant = new ReservationsHandler(tables);
+        Reservation res1 = new Reservation(DateTime.Parse("2023-09-14"), 1);
+        Reservation res2 = new Reservation(DateTime.Parse("2023-09-14"), 4);
+        Reservation res3 = new Reservation(DateTime.Parse("2023-09-14"), 2);
+        Reservation res4 = new Reservation(DateTime.Parse("2023-09-14"), 2);
+        Reservation res5 = new Reservation(DateTime.Parse("2023-09-14"), 10);
+
+        //Act
+        _ = myRestaurant.AddReservation(res1);
+        _ = myRestaurant.AddReservation(res2);
+        _ = myRestaurant.AddReservation(res3);
+        _ = myRestaurant.AddReservation(res4);
+        
+        string candidateResStatus = myRestaurant.AddReservation(res5);
+        Table? largestTableOccupied = tables.Find(x => x.TableSize == 10);
+        Table? smallestTableOccupied = tables.Find(x => x.TableSize == 1);
+
+        //Assert
+        Assert.AreEqual("Accepted", candidateResStatus);
+
+        // Assert largest table has the ten members
+        if (largestTableOccupied != null)
+            Assert.AreEqual(10, largestTableOccupied.FetchCurrentlyOccupied());
+        else
+            Assert.Fail();
+        
+        // Assert the smallest table has the party with 1 member
         if (smallestTableOccupied != null)
             Assert.AreEqual(1, smallestTableOccupied.FetchCurrentlyOccupied());
         else

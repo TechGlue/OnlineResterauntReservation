@@ -1,4 +1,6 @@
+using Microsoft.VisualBasic.CompilerServices;
 using OnlineRestaurantReservation.Models;
+
 namespace OnlineRestaurantReservation;
 
 // Class is going to be the instance of our reservation system 
@@ -24,38 +26,53 @@ public class ReservationsHandler
             foreach (Table table in _tables)
             {
                 int expectedSeatsOccupied = reservation.Quantatity + table.FetchCurrentlyOccupied();
-                
+
                 if (table.TableSize < reservation.Quantatity || expectedSeatsOccupied > table.TableSize)
                 {
                     return ReservationStatus(false);
                 }
-                
+
                 _reservationsQueue.Enqueue(reservation);
                 table.UpdateCurrentlyOccupied(expectedSeatsOccupied);
             }
-            
+
             return ReservationStatus(true);
         }
-        
+
         // iterate through the tables given a reservation 
         // Todo: scan through all the tables first to find an index size that has the smallest amount of seats for the person 
+
+        Table bestPossibleTable = null;
+        double bestPossibleDifference = double.MaxValue;
+
         foreach (Table table in _tables)
         {
             //first check if the table has already been reserved, if not continue 
             // Todo: ensure we aren't over booking
             if (!(table.FetchCurrentlyOccupied() > 0))
-            { 
+            {
+                double currentDifference = table.TableSize / (double)reservation.Quantatity;
                 // Check if we can fit the party into this table
-                if (table.TableSize / reservation.Quantatity >= 1)
+                if (currentDifference >= 1)
                 {
-                    _reservationsQueue.Enqueue(reservation);
-                    table.UpdateCurrentlyOccupied(reservation.Quantatity);
-                    return ReservationStatus(true);
+                    if (currentDifference < bestPossibleDifference)
+                    {
+                        // Update the variables for tracking best possible table
+                        bestPossibleTable = table;
+                        bestPossibleDifference = currentDifference;
+                    }
                 }
                 // If not table fits party size loop out and return rejected status
             }
         }
-        
+
+        if (bestPossibleTable != null)
+        {
+            _reservationsQueue.Enqueue(reservation);
+            bestPossibleTable.UpdateCurrentlyOccupied(reservation.Quantatity);
+            return ReservationStatus(true);
+        }
+
         return ReservationStatus(false);
     }
 
