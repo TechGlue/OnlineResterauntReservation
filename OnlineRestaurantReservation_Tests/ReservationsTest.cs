@@ -199,12 +199,12 @@ public class ReservationsTest
         else
             Assert.Fail();
     }
-    
+
     [TestMethod]
     public void MakeReservation_NoReservations_PrioritizeLargeMemberSizesToLargeTablesAccepted()
     {
         //Arrange
-        List<Table> tables = new List<Table> { new Table(2), new Table(2), new Table(4), new Table(1), new Table(10)};
+        List<Table> tables = new List<Table> { new Table(2), new Table(2), new Table(4), new Table(1), new Table(10) };
         ReservationsHandler myRestaurant = new ReservationsHandler(tables);
         Reservation res1 = new Reservation(DateTime.Parse("2023-09-14"), 1);
         Reservation res2 = new Reservation(DateTime.Parse("2023-09-14"), 4);
@@ -217,7 +217,7 @@ public class ReservationsTest
         _ = myRestaurant.AddReservation(res2);
         _ = myRestaurant.AddReservation(res3);
         _ = myRestaurant.AddReservation(res4);
-        
+
         string candidateResStatus = myRestaurant.AddReservation(res5);
         Table? largestTableOccupied = tables.Find(x => x.TableSize == 10);
         Table? smallestTableOccupied = tables.Find(x => x.TableSize == 1);
@@ -230,35 +230,35 @@ public class ReservationsTest
             Assert.AreEqual(10, largestTableOccupied.FetchCurrentlyOccupied());
         else
             Assert.Fail();
-        
+
         // Assert the smallest table has the party with 1 member
         if (smallestTableOccupied != null)
             Assert.AreEqual(1, smallestTableOccupied.FetchCurrentlyOccupied());
         else
             Assert.Fail();
     }
-    
+
     [TestMethod]
     public void MakeReservation_TwoReservations_Accepted()
     {
         //Arrange
-        List<Table> tables = new List<Table> {new Table(2), new Table(2), new Table(4)};
+        List<Table> tables = new List<Table> { new Table(2), new Table(2), new Table(4) };
         ReservationsHandler myRestaurant = new ReservationsHandler(tables, 2);
         Reservation res1 = new Reservation(DateTime.Parse("2023-09-14 18:00:00"), 4);
         Reservation res2 = new Reservation(DateTime.Parse("2023-09-14 20:00:00"), 3);
 
         //Act
         _ = myRestaurant.AddReservation(res1);
-        string candidateResStatus= myRestaurant.AddReservation(res2);
+        string candidateResStatus = myRestaurant.AddReservation(res2);
         //Assert
         Assert.AreEqual("Accepted", candidateResStatus);
     }
-    
+
     [TestMethod]
     public void MakeReservation_PrioritizeExisitingTablesAndTimes_Rejected()
     {
         //Arrange
-        List<Table> tables = new List<Table> {new Table(2), new Table(4), new Table(4)};
+        List<Table> tables = new List<Table> { new Table(2), new Table(4), new Table(4) };
         ReservationsHandler myRestaurant = new ReservationsHandler(tables, 2.5);
         Reservation res1 = new Reservation(DateTime.Parse("2023-10-22 18:00:00"), 2);
         Reservation res2 = new Reservation(DateTime.Parse("2023-10-22 18:15:00"), 1);
@@ -269,50 +269,50 @@ public class ReservationsTest
         _ = myRestaurant.AddReservation(res1);
         _ = myRestaurant.AddReservation(res2);
         _ = myRestaurant.AddReservation(res3);
-        string candidateResStatus= myRestaurant.AddReservation(candidateReservation);
-        
+        string candidateResStatus = myRestaurant.AddReservation(candidateReservation);
+
         //Assert
         Assert.AreEqual("Rejected", candidateResStatus);
         Assert.AreEqual(3, myRestaurant.GetReservationSize());
     }
-    
+
     [TestMethod]
     public void MakeReservation_PrioritizeExisitingTablesAndTimes_Accepted()
     {
         //Arrange
-        List<Table> tables = new List<Table> {new Table(2), new Table(4), new Table(4)};
+        List<Table> tables = new List<Table> { new Table(2), new Table(4), new Table(4) };
         ReservationsHandler myRestaurant = new ReservationsHandler(tables, 2.5);
         Reservation res1 = new Reservation(DateTime.Parse("2023-10-22 18:00:00"), 2);
         Reservation res2 = new Reservation(DateTime.Parse("2023-10-22 17:45:00"), 2);
-        Reservation candidateReservation  = new Reservation(DateTime.Parse("2023-10-22 20:45:00"), 3);
+        Reservation candidateReservation = new Reservation(DateTime.Parse("2023-10-22 20:45:00"), 3);
 
         //Act
         _ = myRestaurant.AddReservation(res1);
         _ = myRestaurant.AddReservation(res2);
-        string candidateResStatus= myRestaurant.AddReservation(candidateReservation);
-        
+        string candidateResStatus = myRestaurant.AddReservation(candidateReservation);
+
         //Assert
         Assert.AreEqual("Accepted", candidateResStatus);
         Assert.AreEqual(3, myRestaurant.GetReservationSize());
     }
-    
+
     [TestMethod]
     public void MakeReservation_PrioritizeExisitingTablesAndTimes_Rejected2()
     {
         //Arrange
-        List<Table> tables = new List<Table> {new Table(2), new Table(4), new Table(4)};
+        List<Table> tables = new List<Table> { new Table(2), new Table(4), new Table(4) };
         ReservationsHandler myRestaurant = new ReservationsHandler(tables, 2.5);
         Reservation res1 = new Reservation(DateTime.Parse("2023-10-22 18:00:00"), 2);
         Reservation res2 = new Reservation(DateTime.Parse("2023-10-22 18:15:00"), 1);
         Reservation res3 = new Reservation(DateTime.Parse("2023-10-22 17:45:00"), 2);
-        Reservation candidateReservation  = new Reservation(DateTime.Parse("2023-10-22 20:45:00"), 3);
+        Reservation candidateReservation = new Reservation(DateTime.Parse("2023-10-22 20:45:00"), 3);
 
         //Act
         _ = myRestaurant.AddReservation(res1);
         _ = myRestaurant.AddReservation(res2);
         _ = myRestaurant.AddReservation(res3);
         string candidateResStatus = myRestaurant.AddReservation(candidateReservation);
-        
+
         //Assert
         Assert.AreEqual("Accepted", candidateResStatus);
         Assert.AreEqual(4, myRestaurant.GetReservationSize());
